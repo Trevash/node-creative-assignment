@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="animal.css">
+    <meta charset="utf-8">
+    <title>The ultimate question</title>
+    <script>
+        $(document).ready(function() {
+            $.ajax({
+                url: "http://54.213.49.206:8081/collectData",
+                type: "GET",
+                success: function(data) {
+                    console.log("Return from collect", data);
+                    $("#dogNum").val(data.dogs.length);
+                    $("#catNum").val(data.cats.length);
+                    for (let i = 0; i < data.dogs.length; i++) {
+                        $("#dogList").append('<li class="dogItem col-sm-4"><img src="'+data.dogs[i].dogUrl+'"><br>breed:'+data.dogs[i].dogBreed+'</li>');
+                    }
+                    for (let i = 0; i < data.cats.length; i++) {
+                        $("#catList").append('<li class="catItem col-sm-4"><img src="'+data.cats[i].catUrl+'"><br>breed:'+data.cats[i].catBreed+'</li>');
+                    }
+                }
+            }),
+            $("#submitDoggo").click(function(e) {
+                let dogUrl = $("#dogUrl").val();
+                let dogBreed = $("#dogBreed").val();
+                e.preventDefault();
+                $.ajax({
+                    url: "http://54.213.49.206:8081/addDog",
+                    type: "PUT",
+                    contentType: "application/json",
+                    dataType: "json",
+                    data: JSON.stringify({
+                        dogUrl: dogUrl,
+                        dogBreed: dogBreed
+                    }),
+                    success: function(data){
+                        console.log("Response", data);
+                        $("#dogList").append('<li class="dogItem col-sm-4"><img src="'+data.dogUrl+'"><br>breed:'+data.dogBreed+'</li>');
+                        $("#dogNum").val(parseInt($("#dogNum").val()) + 1)
+                    },
+                    error: function(err){
+                        console.log("Device control failed", err);
+                    },
+                })
+            }),
+            $("#submitCat").click(function(e) {
+                let catUrl = $("#catUrl").val();
+                let catBreed = $("#catBreed").val();
+                e.preventDefault();
+                $.ajax({
+                    url: "http://54.213.49.206:8081/addCat",
+                    type: "PUT",
+                    contentType: "application/json",
+                    dataType: "json",
+                    data: JSON.stringify({
+                        catUrl: catUrl,
+                        catBreed: catBreed
+                    }),
+                    success: function(data){
+                        console.log("Response", data);
+                        $("#catList").append('<li class="catItem col-sm-4"><img src="'+data.catUrl+'"><br>breed:'+data.catBreed+'</li>');
+                        $("#dogNum").val(parseInt($("#dogNum").val()) + 1)
+                    },
+                    error: function(err){
+                        console.log("Device control failed", err);
+                    },
+                })
+            })
+        })
+    </script>
+</head>
+
+<body>
+    <div class="container">
+            <h1 class="header">Dogs or Cats</h1>
+            Number of Dogs: <input id="dogNum">
+            Number of Cats: <input id="catNum">
+        <div class="row">
+            <div class="col">
+                <div class="dogs">
+                    <h2>Add dogs here</h2>
+
+                    <input id="dogUrl" placeholder='image url of Dog'/>
+                    <input id="dogBreed" placeholder='Favorite Dog Breed'/>
+                    <button type='submit' id='submitDoggo'>Add New Doggo</button>
+                    <br>
+                    <br>
+                    <ul id="dogList" class="list row">
+                    </ul>
+                </div>
+            </div>
+            <div class="col">
+                <div class="cats">
+                    <h2>Add cats here</h2>
+
+                    <input id="catUrl" placeholder='image url of Cat'/>
+                    <input id="catBreed" placeholder='Favorite Cat Breed'/>
+                    <button type='submit' id='submitCat'>Add New Cat</button>
+                    <br>
+                    <br>
+                    <ul id="catList" class="list row">
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

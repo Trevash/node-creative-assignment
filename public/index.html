@@ -18,10 +18,10 @@
                     $("#dogNum").val(data.dogs.length);
                     $("#catNum").val(data.cats.length);
                     for (let i = 0; i < data.dogs.length; i++) {
-                        $("#dogList").append('<li class="dogItem col-sm-4"><img src="'+data.dogs[i].dogUrl+'"><br>breed:'+data.dogs[i].dogBreed+'</li>');
+                        $("#dogList").append('<li class="dogItem col-sm-4"><img src="'+data.dogs[i].dogUrl+'"><h4>breed: '+data.dogs[i].dogBreed+'</h4></li>');
                     }
                     for (let i = 0; i < data.cats.length; i++) {
-                        $("#catList").append('<li class="catItem col-sm-4"><img src="'+data.cats[i].catUrl+'"><br>breed:'+data.cats[i].catBreed+'</li>');
+                        $("#catList").append('<li class="catItem col-sm-4"><img src="'+data.cats[i].catUrl+'"><h4>breed: '+data.cats[i].catBreed+'</h4></li>');
                     }
                 }
             }),
@@ -40,7 +40,7 @@
                     }),
                     success: function(data){
                         console.log("Response", data);
-                        $("#dogList").append('<li class="dogItem col-sm-4"><img src="'+data.dogUrl+'"><br>breed:'+data.dogBreed+'</li>');
+                        $("#dogList").append('<li class="dogItem col-sm-4"><img src="'+data.dogUrl+'"><h4>breed: '+data.dogBreed+'</h4></li>');
                         $("#dogNum").val(parseInt($("#dogNum").val()) + 1)
                     },
                     error: function(err){
@@ -63,7 +63,7 @@
                     }),
                     success: function(data){
                         console.log("Response", data);
-                        $("#catList").append('<li class="catItem col-sm-4"><img src="'+data.catUrl+'"><br>breed:'+data.catBreed+'</li>');
+                        $("#catList").append('<li class="catItem col-sm-4"><img src="'+data.catUrl+'"><h4>breed: '+data.catBreed+'</h4></li>');
                         $("#dogNum").val(parseInt($("#dogNum").val()) + 1)
                     },
                     error: function(err){

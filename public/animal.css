@@ -1,3 +1,7 @@
+body {
+    background-image: url("./images/field.jpg");
+}
+
 .list {
   list-style: none;
 }
